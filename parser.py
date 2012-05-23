@@ -4,6 +4,7 @@ from contextlib import closing
 from collections import defaultdict
 import pprint
 import urllib2
+import string
 
 def segment(input):
     soup = BeautifulSoup(input)
@@ -22,8 +23,8 @@ def segment(input):
                 content = ""
             else:
                 if content:
-                    content += "\n" 
-                content += unicode(seg.contents[0])
+                    content += " " 
+                content += string.join(map(unicode, seg.contents), " ")
             
     return result
 
