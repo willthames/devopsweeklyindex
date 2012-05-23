@@ -14,13 +14,16 @@ def segment(input):
     for seg in soup.body.find_all(["p","h2"]):
         if seg.name == "h2":
             tag = seg.contents[0]
+            content = ""
         if seg.name == "p":
             if seg.a:
                 url = seg.a.contents[0]
                 result[tag].append({'url': url, 'content': content})
                 content = ""
             else:
-                content = content + "\n" + seg.contents[0]
+                if content:
+                    content += "\n" 
+                content += unicode(seg.contents[0])
             
     return result
 
