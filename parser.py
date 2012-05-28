@@ -5,6 +5,7 @@ from collections import defaultdict
 import pprint
 import urllib2
 import string
+import sys
 
 def segment(input):
     soup = BeautifulSoup(input)
@@ -36,7 +37,8 @@ def read(resource):
        with closing(urllib2.urlopen(resource)) as fp:
            html = fp.read()
    else:
-       html = resource
+       with open(resource) as fp:
+           html = fp.read()
    return segment(html)
 
 if __name__ == "__main__":
