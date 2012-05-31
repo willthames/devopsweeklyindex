@@ -2,6 +2,7 @@ from whoosh.index import create_in, exists_in, open_dir
 from whoosh.fields import * 
 import parser
 import pprint
+import os
 
 
 def get_schema():
@@ -17,6 +18,8 @@ def get_index():
     
     """ 
     if not exists_in("index", indexname="contents"):
+        if not os.path.exists("index"):
+            os.mkdir("index")
         create_in("index", indexname="contents", schema=get_schema())
     return open_dir("index", indexname="contents") 
 
