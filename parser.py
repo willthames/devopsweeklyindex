@@ -22,6 +22,8 @@ def segment(input):
         tag = tag.unwrap()
  
     result = defaultdict(list)
+    devops_issue, devops_date = soup.h2.string.split(u' \u2013 ')
+    result['meta'].append({'issue':  devops_issue, 'date': devops_date})
     
     content = ""
     for seg in soup.body.find_all(["p","h2"]):
