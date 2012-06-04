@@ -6,9 +6,14 @@ import pprint
 import urllib2
 import string
 import sys
+import re
 
 def segment(input):
     soup = BeautifulSoup(input)
+
+    # strip out span tags
+    for tag in soup("span"):
+        tag = tag.unwrap()
  
     result = defaultdict(list)
     
@@ -20,7 +25,8 @@ def segment(input):
         if seg.name == "p":
             if seg.a:
                 url = seg.a.contents[0]
-                result[tag].append({'url': url, 'content': content})
+                # strip out unnecessary additional white space (particularly newlines)
+                result[tag].append({'url': url, 'content': re.sub(r'[ \t\n]+', r' ', content)})
                 content = ""
             else:
                 if content:
