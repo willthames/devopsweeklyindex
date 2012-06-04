@@ -8,6 +8,12 @@ import string
 import sys
 import re
 
+def strip_extra_whitespace(content):
+    return re.sub(r'[ \t\n]+', r' ', content)
+
+def fix_apostrophes(content):
+    return re.sub(u'\u2019', u"'", content)
+
 def segment(input):
     soup = BeautifulSoup(input)
 
@@ -26,7 +32,9 @@ def segment(input):
             if seg.a:
                 url = seg.a.contents[0]
                 # strip out unnecessary additional white space (particularly newlines)
-                result[tag].append({'url': url, 'content': re.sub(r'[ \t\n]+', r' ', content)})
+                content = strip_extra_whitespace(content)
+                content = fix_apostrophes(content)
+                result[tag].append({'url': url, 'content': content })
                 content = ""
             else:
                 if content:
