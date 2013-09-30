@@ -14,7 +14,10 @@
     <div class="result">
       <div class="content">{{ result.get('content') }}</div>
       <div class="link"><a href="{{ result.get('url') }}">{{ result.get('url') }}</a></div>
-      <div class="summary">{{ result.get('section') }}</div>
+      <div class="summary">
+        {{ result['meta'].get('issue') }}
+        {{ result['meta'].get('date') }}
+        {{ result.get('section') }}</div>
     </div>
     {% endfor %}
 {% endblock %}

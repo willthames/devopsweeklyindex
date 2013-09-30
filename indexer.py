@@ -9,6 +9,8 @@ def get_schema():
     return Schema(id=ID,
                   section=TEXT(stored=True),
                   url=TEXT(stored=True), 
+                  issue=INT(stored=True),
+                  pub_date=DATETIME(stored=True),
                   content=TEXT(stored=True))
 
 
@@ -34,7 +36,7 @@ def check_for_presence(ix, segments):
     return False
 
 
-def add_to_index(writer, segment, section, resource):
+def add_to_index(writer, segment, section, resource, meta):
     """ Adds a segment to an index
     Keyword arguments: 
     writer: IndexWriter
@@ -45,6 +47,8 @@ def add_to_index(writer, segment, section, resource):
     writer.add_document(id=unicode(resource),
                         section=section,
                         url=segment['url'],
+                        pub_date=meta['date'],
+                        issue=meta['issue'],
                         content=segment['content'])
 
 
@@ -58,7 +62,7 @@ def index(resource, reindex=False):
         for title in segments:
             for segment in segments[title]:
                 if segment.get("content") and segment.get("url"): 
-                    add_to_index(writer, segment, title, resource)
+                    add_to_index(writer, segment, title, resource, segments['meta'])
     writer.commit()
  
     return(ix)
