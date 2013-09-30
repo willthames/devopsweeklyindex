@@ -57,7 +57,7 @@ def index(resource, reindex=False):
     if not check_for_presence(ix, segments) or reindex:
         for title in segments:
             for segment in segments[title]:
-                if segment["content"] and segment["url"]: 
+                if segment.get("content") and segment.get("url"): 
                     add_to_index(writer, segment, title, resource)
     writer.commit()
  
