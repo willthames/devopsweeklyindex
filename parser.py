@@ -22,12 +22,12 @@ def segment(input):
         tag = tag.unwrap()
  
     result = defaultdict(list)
-    devops_issue, devops_date = soup.h2.string.split(u' \u2013 ')
+    devops_issue, devops_date = soup.title.string.split(u' - ')
     result['meta'].append({'issue':  devops_issue, 'date': devops_date})
     
     content = ""
-    for seg in soup.body.find_all(["p","h2"]):
-        if seg.name == "h2":
+    for seg in soup.body.find_all(["p","h2","h1"]):
+        if seg.name == "h2" or seg.name == "h1":
             tag = seg.contents[0]
             content = ""
         if seg.name == "p":

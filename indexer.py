@@ -66,8 +66,9 @@ def index(resource, reindex=False):
 
 if __name__ == "__main__":
     # work on command line argument
-    result = index(sys.argv[1])
-
+    for arg in sys.argv[1:]:
+        index(arg)
+    result = get_index()
     with result.searcher() as searcher:
         docnums = searcher.document_numbers()
         pprint.pprint(searcher.key_terms(docnums, "content", numterms=1000))
